@@ -2,7 +2,7 @@ package com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common
 
 import java.io.IOException
 
-class BaseException(
+open class BaseException(
     private var throwable: Throwable,
     private var code: String? = null,
     private var errorMessage: String? = null
@@ -16,3 +16,5 @@ class BaseException(
         return errorMessage
     }
 }
+
+class RetrofitResponseToBaseException(throwable: Throwable) : BaseException(throwable)
