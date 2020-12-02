@@ -11,8 +11,8 @@ class AccountRepository @Inject constructor(
     suspend fun login(): Any {
         val response = accountApi.login(
             LoginRequest(
-                "kevin.xu@imaginato.com",
-                "Wsadwsad1234"
+                    "asd@test.com",
+                    "Wsadwsad123"
             )
         )
         if (response.code != 200) {
