@@ -11,7 +11,7 @@ class AccountRepository @Inject constructor(
     fun login(): Single<Any> {
         return accountApi.login(
             LoginRequest(
-                "kevin.xu@imaginato.com",
+                "asd@test.com",
                 "Wsadwsad123"
             )
         ).map {
