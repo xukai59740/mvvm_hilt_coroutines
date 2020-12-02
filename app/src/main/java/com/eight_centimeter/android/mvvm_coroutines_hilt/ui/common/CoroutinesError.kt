@@ -4,7 +4,6 @@ import com.eight_centimeter.android.mvvm_coroutines_hilt.App
 import com.eight_centimeter.android.mvvm_coroutines_hilt.R
 import com.eight_centimeter.android.mvvm_coroutines_hilt.data.common.BaseResponse
 import com.google.gson.Gson
-import io.reactivex.functions.Consumer
 import retrofit2.HttpException
 import retrofit2.Response
 import java.net.ConnectException
@@ -12,13 +11,13 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.net.UnknownServiceException
 
-abstract class CustomErrorConsumer : Consumer<Throwable> {
+object CoroutinesError {
 
-    override fun accept(throwable: Throwable) {
-        if (throwable is BaseException) {
-            acceptBaseHttpException(throwable)
+    fun accept(throwable: Throwable): BaseException {
+        return if (throwable is BaseException) {
+            throwable
         } else {
-            acceptBaseHttpException(createBaseException(throwable))
+            createBaseException(throwable)
         }
     }
 
@@ -77,9 +76,4 @@ abstract class CustomErrorConsumer : Consumer<Throwable> {
         }
     }
 
-    private fun acceptBaseHttpException(baseException: BaseException) {
-        accept(baseException)
-    }
-
-    abstract fun accept(it: BaseException)
 }

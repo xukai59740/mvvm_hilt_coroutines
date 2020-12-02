@@ -1,23 +1,23 @@
 package com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common
 
 import androidx.lifecycle.ViewModel
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 abstract class BaseViewModel : ViewModel() {
 
-    private val compositeDisposable = CompositeDisposable()
-
-    protected fun Disposable.collect() = compositeDisposable.add(this)
-
     abstract fun init()
 
-    fun cleared() {
-        onCleared()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.dispose()
+    fun <T> asyncRun(
+        context: CoroutineContext = Dispatchers.IO,
+        scope: CoroutineScope,
+        OnRun: suspend () -> T,
+        onResult: (Either<BaseException, T>) -> Unit = {}
+    ) {
+        val job = scope.async(context) { either { OnRun.invoke() } }
+        scope.launch(Dispatchers.Main) { onResult(job.await()) }
     }
 }

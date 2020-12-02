@@ -1,22 +1,28 @@
 package com.eight_centimeter.android.mvvm_coroutines_hilt.data.account
 
 import com.eight_centimeter.android.mvvm_coroutines_hilt.data.account.entity.LoginRequest
-import io.reactivex.Single
+import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common.BadHttpException
 import javax.inject.Inject
 
 class AccountRepository @Inject constructor(
     private val accountApi: AccountApi
 ) {
 
-    fun login(): Single<Any> {
-        return accountApi.login(
+    suspend fun login(): Any {
+        val response = accountApi.login(
             LoginRequest(
                 "kevin.xu@imaginato.com",
-                "Wsadwsad123"
+                "Wsadwsad1234"
             )
-        ).map {
-            it.data
+        )
+        if (response.code != 200) {
+            throw BadHttpException(
+                Throwable(),
+                response.code.toString(),
+                response.message
+            )
         }
+        return response.data
     }
 
 }
