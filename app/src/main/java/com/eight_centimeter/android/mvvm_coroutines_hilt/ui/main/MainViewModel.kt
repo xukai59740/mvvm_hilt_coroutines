@@ -23,7 +23,6 @@ class MainViewModel @ViewModelInject constructor(
                 loginLiveData.value = Resource(Status.SUCCESS)
             },{
                 loginLiveData.value = Resource(Status.ERROR, it)
-            })
-
+            }).collect()
     }
 }
