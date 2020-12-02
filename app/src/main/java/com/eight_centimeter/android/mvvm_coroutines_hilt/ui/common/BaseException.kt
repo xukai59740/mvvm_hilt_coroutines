@@ -17,4 +17,7 @@ open class BaseException(
     }
 }
 
+class BadHttpException(throwable: Throwable, code: String?, errorMessage: String?) :
+    BaseException(throwable, code, errorMessage)
+
 class RetrofitResponseToBaseException(throwable: Throwable) : BaseException(throwable)
