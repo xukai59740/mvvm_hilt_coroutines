@@ -13,24 +13,33 @@ import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 
 class SnackBarUtil {
+    fun showErrorSnack(
+        activity: Activity,
+        msg: String?,
+        dismissCallBack: (() -> Unit)? = {}
+    ): Snackbar {
+        return showSnack(
+            activity,
+            msg ?: "",
+            R.drawable.iv_snack_error,
+            dismissCallBack
+        )
+    }
 
-    /**
-     *
-     * SnackBarUtil().showSnack(
-    requireActivity(),
-    String.format(
-    getString(
-    R.string.exit_channel_success,
-    viewModel.currentGroupVM?.name
-    )
-    ),
-    R.drawable.iv_snack_ok
-    ) { startActivity(Intent(requireContext(), HomeActivity::class.java)) }
-     *
-     *
-     *
-     */
-    fun showSnack(
+    fun showOkSnack(
+        activity: Activity,
+        msg: String?,
+        dismissCallBack: (() -> Unit)? = {}
+    ): Snackbar {
+        return showSnack(
+            activity,
+            msg ?: "",
+            R.drawable.iv_snack_ok,
+            dismissCallBack
+        )
+    }
+
+    private fun showSnack(
         activity: Activity,
         msg: String,
         icon: Int?,

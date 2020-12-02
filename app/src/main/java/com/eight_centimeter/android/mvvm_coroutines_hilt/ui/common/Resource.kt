@@ -4,7 +4,7 @@ open class BaseResource<T, S>(open val status: S) {
 
     var item: T? = null
 
-    var exception: Exception? = null
+    var exception: BaseException? = null
 }
 
 class Resource<T>(override val status: Status) : BaseResource<T, Status>(status) {
@@ -13,7 +13,7 @@ class Resource<T>(override val status: Status) : BaseResource<T, Status>(status)
         this.item = item
     }
 
-    constructor(status: Status, exception: Exception) : this(status) {
+    constructor(status: Status, exception: BaseException) : this(status) {
         this.exception = exception
     }
 }
