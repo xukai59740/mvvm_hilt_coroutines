@@ -22,10 +22,7 @@ class MainActivity : BaseViewModelActivity<MainViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-    }
-
-    override fun getContentResource(): Int {
-        return R.layout.activity_main
+        setContentView(R.layout.activity_main)
     }
 
     override fun buildViewModel(): MainViewModel {

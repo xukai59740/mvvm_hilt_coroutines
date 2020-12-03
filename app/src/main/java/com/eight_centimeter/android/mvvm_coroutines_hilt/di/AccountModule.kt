@@ -5,6 +5,7 @@ import com.eight_centimeter.android.hiltdemo.di.NetworkModule
 import com.eight_centimeter.android.hiltdemo.di.NormalRetrofit
 import com.eight_centimeter.android.mvvm_coroutines_hilt.data.account.AccountApi
 import com.eight_centimeter.android.mvvm_coroutines_hilt.data.account.AccountRepository
+import com.eight_centimeter.android.mvvm_coroutines_hilt.data.common.SharedPrefs
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +14,7 @@ import retrofit2.Retrofit
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
-@Module(includes = [NetworkModule::class])
+@Module(includes = [NetworkModule::class, SharePrefModule::class])
 @InstallIn(ApplicationComponent::class)
 class AccountModule {
 
@@ -32,9 +33,10 @@ class AccountModule {
     @Provides
     @Singleton
     fun provideAccountRepository(
-        @NormalAccountApi accountApi: AccountApi
+            @NormalAccountApi accountApi: AccountApi,
+            sharedPrefs: SharedPrefs
     ): AccountRepository {
-        return AccountRepository(accountApi)
+        return AccountRepository(accountApi, sharedPrefs)
     }
 }
 
