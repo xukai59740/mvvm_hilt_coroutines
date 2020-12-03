@@ -18,7 +18,7 @@ class MainViewModel @ViewModelInject constructor(
         loginLiveData.value = Resource(Status.LOADING)
         asyncRun(
             scope = viewModelScope,
-            OnRun = {
+            onRun = {
                 accountRepository.login()
             },
             onResult = {

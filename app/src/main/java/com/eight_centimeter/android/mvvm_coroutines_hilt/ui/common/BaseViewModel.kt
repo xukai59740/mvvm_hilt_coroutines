@@ -14,10 +14,10 @@ abstract class BaseViewModel : ViewModel() {
     fun <T> asyncRun(
         context: CoroutineContext = Dispatchers.IO,
         scope: CoroutineScope,
-        OnRun: suspend () -> T,
+        onRun: suspend () -> T,
         onResult: (Either<BaseException, T>) -> Unit = {}
     ) {
-        val job = scope.async(context) { either { OnRun.invoke() } }
+        val job = scope.async(context) { either { onRun.invoke() } }
         scope.launch(Dispatchers.Main) { onResult(job.await()) }
     }
 }

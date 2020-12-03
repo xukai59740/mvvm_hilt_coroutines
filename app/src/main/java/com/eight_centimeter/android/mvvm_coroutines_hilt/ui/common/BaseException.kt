@@ -3,7 +3,7 @@ package com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common
 import java.io.IOException
 
 open class BaseException(
-    private var throwable: Throwable,
+    throwable: Throwable,
     private var code: String? = null,
     private var errorMessage: String? = null
 ) : IOException(throwable) {
