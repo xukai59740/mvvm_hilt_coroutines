@@ -2,16 +2,14 @@ package com.eight_centimeter.android.mvvm_coroutines_hilt.ui.main
 
 import android.os.Bundle
 import android.view.KeyEvent
-import androidx.activity.viewModels
 import com.eight_centimeter.android.mvvm_coroutines_hilt.R
 import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common.BaseViewModelActivity
 import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common.SafeObserver
 import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common.Status
 import com.eight_centimeter.android.mvvm_coroutines_hilt.utils.ProgressDialogUtil
 import com.eight_centimeter.android.mvvm_coroutines_hilt.utils.SnackBarUtil
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.java.KoinJavaComponent
 
-@AndroidEntryPoint
 class MainActivity : BaseViewModelActivity<MainViewModel>() {
 
     companion object {
@@ -26,8 +24,7 @@ class MainActivity : BaseViewModelActivity<MainViewModel>() {
     }
 
     override fun buildViewModel(): MainViewModel {
-        val viewModel: MainViewModel by viewModels()
-        return viewModel
+        return KoinJavaComponent.get(MainViewModel::class.java)
     }
 
     override fun initObserve() {

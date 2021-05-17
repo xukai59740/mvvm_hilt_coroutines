@@ -85,10 +85,6 @@
 -keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
 ####################
 
-##### dagger #####
--dontwarn com.google.errorprone.annotations.**
-####################
-
 ##### room #####
 -keep class androidx.room.RoomDataBase { *; }
 -keep class androidx.room.Room { *; }

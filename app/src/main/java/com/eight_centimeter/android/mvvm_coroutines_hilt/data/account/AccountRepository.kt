@@ -3,14 +3,14 @@ package com.eight_centimeter.android.mvvm_coroutines_hilt.data.account
 import com.eight_centimeter.android.mvvm_coroutines_hilt.data.account.entity.LoginRequest
 import com.eight_centimeter.android.mvvm_coroutines_hilt.data.common.SharedPrefs
 import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common.BadHttpException
-import javax.inject.Inject
 
-class AccountRepository @Inject constructor(
+class AccountRepository constructor(
         private val accountApi: AccountApi,
         private val sharedPrefs: SharedPrefs
 ) {
 
     suspend fun login(): Any {
+        sharedPrefs.getApiToken()
         val response = accountApi.login(
                 LoginRequest(
                         "asd@test.com",

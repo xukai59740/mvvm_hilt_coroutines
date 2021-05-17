@@ -1,10 +1,13 @@
 package com.eight_centimeter.android.mvvm_coroutines_hilt
 
 import androidx.multidex.MultiDexApplication
+import com.eight_centimeter.android.mvvm_coroutines_hilt.di.appModule
 import com.facebook.stetho.Stetho
-import dagger.hilt.android.HiltAndroidApp
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
-@HiltAndroidApp
 class App : MultiDexApplication() {
 
     companion object {
@@ -17,6 +20,11 @@ class App : MultiDexApplication() {
         super.onCreate()
         instance = this
         initSteTho()
+        startKoin {
+            androidLogger(Level.INFO)
+            androidContext(this@App)
+            modules(appModule)
+        }
     }
 
     private fun initSteTho() {
