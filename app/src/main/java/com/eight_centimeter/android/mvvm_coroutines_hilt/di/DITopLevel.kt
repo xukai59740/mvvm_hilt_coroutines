@@ -12,6 +12,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -49,6 +50,35 @@ private val sourceModule = module {
             .build()
     }
 
+    single(named("Mock")) {
+        // interceptors
+        val interceptors = arrayListOf<Interceptor>()
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }
+        }
+        interceptors.add(CommonParameterInterceptor())
+        interceptors.add(loggingInterceptor)
+
+        //okHttpClient
+        val clientBuilder = OkHttpClient.Builder()
+        clientBuilder.readTimeout(1, TimeUnit.MINUTES)
+        clientBuilder.connectTimeout(1, TimeUnit.MINUTES)
+        interceptors.forEach { clientBuilder.addInterceptor(it) }
+        val okHttpClient = clientBuilder.build()
+
+
+        Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl("http://baidu.ai:8081")
+            .client(okHttpClient)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+    }
+
     single {
         SharedPrefs(androidApplication())
     }
@@ -59,7 +89,7 @@ private val repositoryModule = module {
 
     //Employer
     single {
-        get<Retrofit>().create(AccountApi::class.java)
+        get<Retrofit>(named("Mock")).create(AccountApi::class.java)
     }
     single { AccountRepository(get(),get()) } bind AccountRepository::class
 

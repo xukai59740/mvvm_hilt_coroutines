@@ -8,7 +8,7 @@ import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common.SafeObserver
 import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common.Status
 import com.eight_centimeter.android.mvvm_coroutines_hilt.utils.ProgressDialogUtil
 import com.eight_centimeter.android.mvvm_coroutines_hilt.utils.SnackBarUtil
-import org.koin.java.KoinJavaComponent
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseViewModelActivity<MainViewModel>() {
 
@@ -24,7 +24,9 @@ class MainActivity : BaseViewModelActivity<MainViewModel>() {
     }
 
     override fun buildViewModel(): MainViewModel {
-        return KoinJavaComponent.get(MainViewModel::class.java)
+        // get(EmployerRepository::class.java)
+        val viewModels: MainViewModel by viewModel()
+        return viewModels
     }
 
     override fun initObserve() {
