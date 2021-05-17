@@ -3,6 +3,7 @@ package com.eight_centimeter.android.mvvm_coroutines_hilt.ui.main
 import android.os.Bundle
 import android.view.KeyEvent
 import com.eight_centimeter.android.mvvm_coroutines_hilt.R
+import com.eight_centimeter.android.mvvm_coroutines_hilt.data.account.entity.EmployerResponse
 import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common.BaseViewModelActivity
 import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common.SafeObserver
 import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common.Status

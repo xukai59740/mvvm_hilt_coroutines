@@ -1,5 +1,6 @@
 package com.eight_centimeter.android.mvvm_coroutines_hilt.data.account
 
+import com.eight_centimeter.android.mvvm_coroutines_hilt.data.account.entity.EmployerResponse
 import com.eight_centimeter.android.mvvm_coroutines_hilt.data.account.entity.LoginRequest
 import com.eight_centimeter.android.mvvm_coroutines_hilt.data.common.SharedPrefs
 import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common.BadHttpException
@@ -28,4 +29,8 @@ class AccountRepository constructor(
         return response.data
     }
 
+
+    suspend fun getProfile(): EmployerResponse {
+        return accountApi.getProfile()
+    }
 }

@@ -73,7 +73,7 @@ private val sourceModule = module {
 
         Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("http://baidu.ai:8081")
+            .baseUrl("http://vara-backend-stage-1696459768.ap-southeast-1.elb.amazonaws.com")
             .client(okHttpClient)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
