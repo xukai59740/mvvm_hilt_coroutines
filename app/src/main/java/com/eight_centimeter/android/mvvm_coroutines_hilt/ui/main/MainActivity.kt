@@ -32,8 +32,10 @@ class MainActivity : BaseViewModelActivity<MainViewModel>() {
     }
 
     private fun showPop(){
+        XPopup.setStatusBarBgColor(Color.parseColor("#00000000"))
         XPopup.setShadowBgColor(Color.parseColor("#00000000"))
         XPopup.Builder(this)
+            .isLightStatusBar(true)
             .popupAnimation(PopupAnimation.TranslateFromBottom)
             .asCustom(RegisterHongBaoPop(this))
             .show()
