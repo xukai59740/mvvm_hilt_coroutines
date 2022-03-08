@@ -1,5 +1,6 @@
 package com.eight_centimeter.android.mvvm_coroutines_hilt.ui.main
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
 import com.eight_centimeter.android.mvvm_coroutines_hilt.R
@@ -9,6 +10,9 @@ import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common.SafeObserver
 import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common.Status
 import com.eight_centimeter.android.mvvm_coroutines_hilt.utils.ProgressDialogUtil
 import com.eight_centimeter.android.mvvm_coroutines_hilt.utils.SnackBarUtil
+import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.enums.PopupAnimation
+import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseViewModelActivity<MainViewModel>() {
@@ -22,17 +26,26 @@ class MainActivity : BaseViewModelActivity<MainViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        tvHelloWorld.setOnClickListener {
+            showPop()
+        }
+    }
+
+    private fun showPop(){
+        XPopup.setShadowBgColor(Color.parseColor("#00000000"))
+        XPopup.Builder(this)
+            .popupAnimation(PopupAnimation.TranslateFromBottom)
+            .asCustom(RegisterHongBaoPop(this))
+            .show()
     }
 
     override fun buildViewModel(): MainViewModel {
-        // get(EmployerRepository::class.java)
         val viewModels: MainViewModel by viewModel()
         return viewModels
     }
 
     override fun initObserve() {
         viewModel.loginLiveData.observe(this, SafeObserver {
-
             when (it.status) {
                 Status.LOADING -> {
                     ProgressDialogUtil.showProgressDialog(this)
