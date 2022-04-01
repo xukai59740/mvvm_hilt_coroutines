@@ -12,6 +12,8 @@ class App : MultiDexApplication() {
 
     companion object {
 
+        var lang:String = "en"
+
         lateinit var instance: App
             private set
     }
