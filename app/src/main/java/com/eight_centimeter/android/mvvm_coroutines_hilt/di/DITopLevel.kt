@@ -6,7 +6,7 @@ import com.eight_centimeter.android.mvvm_coroutines_hilt.data.account.AccountRep
 import com.eight_centimeter.android.mvvm_coroutines_hilt.data.common.CommonParameterInterceptor
 import com.eight_centimeter.android.mvvm_coroutines_hilt.data.common.SharedPrefs
 import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.main.MainViewModel
-
+import java.util.concurrent.TimeUnit
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,7 +18,6 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
 private val sourceModule = module {
     single {
@@ -84,20 +83,19 @@ private val sourceModule = module {
     }
 }
 
-
 private val repositoryModule = module {
 
     //Employer
     single {
         get<Retrofit>(named("Mock")).create(AccountApi::class.java)
     }
-    single { AccountRepository(get(),get()) } bind AccountRepository::class
+    single { AccountRepository(get(), get()) } bind AccountRepository::class
 
 }
 
 private val viewModelModule = module {
     viewModel {
-        MainViewModel(get())
+        MainViewModel(get(), get())
     }
 }
 

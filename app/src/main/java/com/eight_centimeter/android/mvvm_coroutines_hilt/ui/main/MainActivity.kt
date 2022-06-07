@@ -3,13 +3,12 @@ package com.eight_centimeter.android.mvvm_coroutines_hilt.ui.main
 import android.os.Bundle
 import android.view.KeyEvent
 import com.eight_centimeter.android.mvvm_coroutines_hilt.R
-import com.eight_centimeter.android.mvvm_coroutines_hilt.data.account.entity.EmployerResponse
 import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common.BaseViewModelActivity
 import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common.SafeObserver
 import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common.Status
 import com.eight_centimeter.android.mvvm_coroutines_hilt.utils.ProgressDialogUtil
 import com.eight_centimeter.android.mvvm_coroutines_hilt.utils.SnackBarUtil
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
 class MainActivity : BaseViewModelActivity<MainViewModel>() {
 
@@ -25,8 +24,7 @@ class MainActivity : BaseViewModelActivity<MainViewModel>() {
     }
 
     override fun buildViewModel(): MainViewModel {
-        // get(EmployerRepository::class.java)
-        val viewModels: MainViewModel by viewModel()
+        val viewModels: MainViewModel by stateViewModel()
         return viewModels
     }
 
@@ -72,5 +70,4 @@ class MainActivity : BaseViewModelActivity<MainViewModel>() {
         }
         return super.onKeyDown(keyCode, event)
     }
-
 }
