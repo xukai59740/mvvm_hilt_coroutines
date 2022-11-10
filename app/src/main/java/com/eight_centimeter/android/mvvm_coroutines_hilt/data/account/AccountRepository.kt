@@ -4,6 +4,10 @@ import com.eight_centimeter.android.mvvm_coroutines_hilt.data.account.entity.Emp
 import com.eight_centimeter.android.mvvm_coroutines_hilt.data.account.entity.LoginRequest
 import com.eight_centimeter.android.mvvm_coroutines_hilt.data.common.SharedPrefs
 import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common.BadHttpException
+import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.common.Result
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 
 class AccountRepository constructor(
         private val accountApi: AccountApi,
@@ -32,5 +36,15 @@ class AccountRepository constructor(
 
     suspend fun getProfile(): EmployerResponse {
         return accountApi.getProfile()
+    }
+
+    fun test(): Flow<Result<String>> {
+        return flowOf(Result.Success("zxc"))
+    }
+
+    fun test2(): Flow<Result<String>> {
+        return flow {
+            emit(Result.Success("asd"))
+        }
     }
 }

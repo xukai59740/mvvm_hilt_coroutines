@@ -4,6 +4,9 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
@@ -19,5 +22,11 @@ abstract class BaseViewModel : ViewModel() {
     ) {
         val job = scope.async(context) { either { onRun.invoke() } }
         scope.launch(Dispatchers.Main) { onResult(job.await()) }
+    }
+
+    fun <R>executeFlow(flow: Flow<Result<R>>):Flow<Result<R>>{
+        return flow.catch { e ->
+            emit(Result.Error(Exception(e)))
+        }.flowOn(Dispatchers.IO)
     }
 }
