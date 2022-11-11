@@ -1,16 +1,19 @@
 package com.eight_centimeter.android.mvvm_coroutines_hilt.di
 
+import androidx.room.Room
 import com.eight_centimeter.android.mvvm_coroutines_hilt.BuildConfig
 import com.eight_centimeter.android.mvvm_coroutines_hilt.data.account.AccountApi
 import com.eight_centimeter.android.mvvm_coroutines_hilt.data.account.AccountRepository
 import com.eight_centimeter.android.mvvm_coroutines_hilt.data.common.CommonParameterInterceptor
 import com.eight_centimeter.android.mvvm_coroutines_hilt.data.common.SharedPrefs
+import com.eight_centimeter.android.mvvm_coroutines_hilt.data.room.MyDatabase
 import com.eight_centimeter.android.mvvm_coroutines_hilt.ui.main.MainViewModel
 import java.util.concurrent.TimeUnit
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
@@ -89,7 +92,7 @@ private val repositoryModule = module {
     single {
         get<Retrofit>(named("Mock")).create(AccountApi::class.java)
     }
-    single { AccountRepository(get(), get()) } bind AccountRepository::class
+    single { AccountRepository(get(), get(), get()) } bind AccountRepository::class
 
 }
 
@@ -99,4 +102,18 @@ private val viewModelModule = module {
     }
 }
 
-val appModule = listOf(sourceModule, repositoryModule, viewModelModule)
+
+const val MyDatabaseName = "searchhistory.db"
+private val databaseModule = module {
+    single {
+        Room.databaseBuilder(
+            androidContext(),
+            MyDatabase::class.java,
+            MyDatabaseName
+        ).fallbackToDestructiveMigration().build()
+    }
+
+    single { get<MyDatabase>().userDao() }
+
+}
+val appModule = listOf(sourceModule, repositoryModule, databaseModule, viewModelModule)
